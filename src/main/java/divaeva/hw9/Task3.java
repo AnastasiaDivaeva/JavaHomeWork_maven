@@ -10,9 +10,15 @@ public class Task3 {
         PHONE_BOOK[1] = "016/161617";
         PHONE_BOOK[2] = "016/161618";
 
-        Optional<Integer> index = findIndexByPhoneNumber("016/gg");
+        Optional<Integer> index = findIndexByPhoneNumber("016/161616");
         System.out.println(index);
+
+    if (index.isPresent()) {
+        System.out.println("Phone number found at index: " + index.get());
+    } else {
+        System.out.println("Phone number not found");
     }
+}
 
     public static Optional<Integer> findIndexByPhoneNumber(String phoneNumber) {
         for (int i = 0; i < PHONE_BOOK.length; i++) {
