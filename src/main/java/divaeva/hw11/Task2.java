@@ -1,5 +1,7 @@
 package divaeva.hw11;
 
+import java.time.Duration;
+
 import java.util.*;
 
 public class Task2 {
@@ -9,31 +11,32 @@ public class Task2 {
     public static void benchmarkAddsToList(Collection<Integer> collectionForBenchmarking) {
         long startTime;
         long finishTime;
-
         startTime = System.nanoTime();
         for (int i = 0; i < ITERATIONS; i++) {
             collectionForBenchmarking.add(i);
         }
         finishTime = System.nanoTime();
+
+        long elapsedTime = finishTime - startTime;
+        System.out.println("Time Elapsed: " + elapsedTime + " ms");
         System.out.println("Time taken to fill " + collectionForBenchmarking.getClass().getSimpleName()
-                + ": " + nano_secondsToSeconds(finishTime - startTime));
+                + ": " + nano_secondsToSeconds(elapsedTime) + " s");
     }
 
     public static void benchmarkGetByIndex(List<Integer> collectionForBenchmarking) {
-        long startTime;
-        long finishTime;
+        long startTime = System.nanoTime();
         Random random = new Random();
-
-        startTime = System.nanoTime();
         for (int i = 0; i < ITERATIONS; i++) {
             int randomIndex = random.nextInt(collectionForBenchmarking.size());
             collectionForBenchmarking.get(randomIndex);
         }
-        finishTime = System.nanoTime();
+        long finishTimeGet = System.nanoTime();
+
+        long elapsedTimeGet = finishTimeGet - startTime;
+        System.out.println("Time Elapsed: " + elapsedTimeGet + " ns");
         System.out.println("Time taken to select random elements from "
                 + collectionForBenchmarking.getClass().getSimpleName() + ": "
-                + nano_secondsToSeconds(finishTime - startTime));
-
+                + nano_secondsToSeconds(elapsedTimeGet) + " s");
     }
 
     public static void main(String[] args) {

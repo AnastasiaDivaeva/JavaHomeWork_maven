@@ -15,7 +15,7 @@ public class Task1 {
     }
 
     public static void main(String[] args) {
-        List<String> strings = Arrays.asList("тут", "там", "стол", "стол и стул");
+        List<String> strings = Arrays.asList("тут", "там", "стол", "стол");
         Map<String, Integer> result = lineNumber(strings);
         List<String> keys = new ArrayList<>(result.keySet());
         for (int i = 0; i < keys.size(); i++) {
