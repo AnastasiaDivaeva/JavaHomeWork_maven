@@ -4,7 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class Test3BooksShouldBePlacedOnThePage28 {
@@ -29,11 +32,19 @@ public class Test3BooksShouldBePlacedOnThePage28 {
         WebElement enterButton = driver.findElement(By.xpath("//button[text()='Увійти']"));
         enterButton.click();
 
-        WebElement paperBooks = driver.findElement(By.cssSelector("nav li a[class='gilroy-h4']"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='gilroy-h4']")));
+
+
+        WebElement paperBooks = driver.findElement(By.xpath("//a[@class='gilroy-h4']"));
         paperBooks.click();
 
-        List<WebElement> newsElements = driver.findElements(By.xpath("//div[contains(@class, 'product-card')]"));
-        Assert.assertEquals(28,newsElements.size());
+        WebDriverWait waiter = new WebDriverWait(driver, Duration.ofSeconds(30));
+        waiter.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'catalogue-products')]")));
+
+        WebElement newsElement = driver.findElement(By.xpath("//div[contains(@class, 'catalogue-products')]"));
+        List<WebElement> newsElements = newsElement.findElements(By.xpath("//div[contains(@class, 'product-card')]"));
+        Assert.assertEquals(28, newsElements.size());
 
         driver.close();
 
