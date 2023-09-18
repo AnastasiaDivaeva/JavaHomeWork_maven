@@ -9,6 +9,15 @@ import org.testng.Assert;
 import java.time.Duration;
 
 public class RegistrationOnTheSite {
+    public static void main(String[] args) {
+        openSite();
+        findRegistrationButton();
+        fillInRegistrationInfo();
+        WebElement registerSMS = submitRegistration();
+
+        Assert.assertEquals(registerSMS.getText(), "СМС-підтвердження");
+        TestUtils.DRIVER.close();
+    }
 
     private static void openSite() {
         TestUtils.DRIVER.navigate().to("https://starylev.com.ua/");
@@ -43,20 +52,9 @@ public class RegistrationOnTheSite {
         checkbox.click();
     }
 
-    private static void submitRegistration() {
+    private static WebElement submitRegistration() {
         WebElement register = TestUtils.DRIVER.findElement(By.xpath("//button[text()='Зареєструватись']"));
         register.click();
-
-        WebElement registerSMS = TestUtils.DRIVER.findElement(By.xpath("//h3[text()='СМС-підтвердження']"));
-
-        Assert.assertEquals("СМС-підтвердження", registerSMS.getText());
-    }
-
-    public static void main(String[] args) {
-        openSite();
-        findRegistrationButton();
-        fillInRegistrationInfo();
-        submitRegistration();
-        TestUtils.DRIVER.close();
+        return TestUtils.DRIVER.findElement(By.xpath("//h3[text()='СМС-підтвердження']"));
     }
 }

@@ -10,6 +10,16 @@ import java.time.Duration;
 import java.util.List;
 
 public class The28BooksShouldBePlacedOnThePage {
+    public static void main(String[] args) {
+        WebDriverWait wait = new WebDriverWait(TestUtils.DRIVER, Duration.ofSeconds(30));
+
+        openSite();
+        doLogin();
+        searchBooks(wait);
+        List<WebElement> books = assertBooksCount(wait);
+        Assert.assertEquals(books.size(), 28);
+        TestUtils.DRIVER.close();
+    }
 
     private static void openSite() {
         TestUtils.DRIVER.navigate().to("https://starylev.com.ua/");
@@ -36,20 +46,8 @@ public class The28BooksShouldBePlacedOnThePage {
         paperBooks.click();
     }
 
-    private static void assertBooksCount(WebDriverWait wait, int expectedSize) {
+    private static List<WebElement> assertBooksCount(WebDriverWait wait) {
         WebElement booksCatalog = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'catalogue-products')]")));
-        List<WebElement> books = booksCatalog.findElements(By.xpath("//div[contains(@class, 'product-card')]"));
-
-        Assert.assertEquals(expectedSize, books.size());
-    }
-
-    public static void main(String[] args) {
-        WebDriverWait wait = new WebDriverWait(TestUtils.DRIVER, Duration.ofSeconds(30));
-
-        openSite();
-        doLogin();
-        searchBooks(wait);
-        assertBooksCount(wait, 28);
-        TestUtils.DRIVER.close();
+        return booksCatalog.findElements(By.xpath("//div[contains(@class, 'product-card')]"));
     }
 }

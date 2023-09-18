@@ -14,8 +14,6 @@ public class TestUtils {
 
     private static WebDriver initDriver() {
         WebDriver driver = new ChromeDriver();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-notifications");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         return driver;
