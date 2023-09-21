@@ -13,8 +13,9 @@ public class RegistrationOnTheSite {
         openSite();
         findRegistrationButton();
         fillInRegistrationInfo();
-        WebElement registerSMS = submitRegistration();
+        submitRegistration();
 
+        WebElement registerSMS = TestUtils.DRIVER.findElement(By.xpath("//h3[text()='СМС-підтвердження']"));
         Assert.assertEquals(registerSMS.getText(), "СМС-підтвердження");
         TestUtils.DRIVER.close();
     }
@@ -52,9 +53,9 @@ public class RegistrationOnTheSite {
         checkbox.click();
     }
 
-    private static WebElement submitRegistration() {
-        WebElement register = TestUtils.DRIVER.findElement(By.xpath("//button[text()='Зареєструватись']"));
-        register.click();
-        return TestUtils.DRIVER.findElement(By.xpath("//h3[text()='СМС-підтвердження']"));
+    private static void submitRegistration() {
+        TestUtils.DRIVER
+                .findElement(By.xpath("//button[text()='Зареєструватись']"))
+                .click();
     }
 }

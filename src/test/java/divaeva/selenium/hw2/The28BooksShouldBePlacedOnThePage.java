@@ -16,7 +16,7 @@ public class The28BooksShouldBePlacedOnThePage {
         openSite();
         doLogin();
         searchBooks(wait);
-        List<WebElement> books = assertBooksCount(wait);
+        List<WebElement> books = getBooksElements(wait);
         Assert.assertEquals(books.size(), 28);
         TestUtils.DRIVER.close();
     }
@@ -46,8 +46,9 @@ public class The28BooksShouldBePlacedOnThePage {
         paperBooks.click();
     }
 
-    private static List<WebElement> assertBooksCount(WebDriverWait wait) {
+    private static List<WebElement> getBooksElements(WebDriverWait wait) {
         WebElement booksCatalog = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'catalogue-products')]")));
         return booksCatalog.findElements(By.xpath("//div[contains(@class, 'product-card')]"));
     }
+
 }

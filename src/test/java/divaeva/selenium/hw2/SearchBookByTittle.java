@@ -12,10 +12,13 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 
 public class SearchBookByTittle {
     public static void main(String[] args) {
+        int expectedSearchResultsCount = 4;
         openSite();
         doLogin();
-        prepareSearchQuery();
-        List<WebElement> searchResult = submitSearchQuery();
+        WebElement searchInput = prepareSearchQuery();
+        submitSearchQuery(searchInput);
+        List<WebElement> searchResult = getSearchResult();
+        Assert.assertEquals(searchResult.size(), expectedSearchResultsCount);
         for (WebElement webElement : searchResult) {
             String resultText = webElement.getText();
             Assert.assertTrue(resultText.contains("Тема для медитації"));
@@ -41,19 +44,21 @@ public class SearchBookByTittle {
         enterButton.click();
     }
 
-    private static void prepareSearchQuery() {
+    private static WebElement prepareSearchQuery() {
         WebElement searchInput = TestUtils.DRIVER.findElement(By.xpath("//input[@placeholder='Шукати...']"));
         searchInput.sendKeys("Тема для медитації");
+        return searchInput;
     }
 
-    private static List<WebElement> submitSearchQuery() {
+    private static void submitSearchQuery( WebElement searchInput) {
         By searchButtonSelector = By.xpath("//a[ text()='Переглянути більше']");
         WebDriverWait wait = new WebDriverWait(TestUtils.DRIVER, Duration.ofSeconds(10));
         WebElement searchButton = wait.until(visibilityOfElementLocated(searchButtonSelector));
         searchButton.click();
+    }
+
+    private static List<WebElement> getSearchResult() {
         WebElement allResults = TestUtils.DRIVER.findElement(By.className("Search_search__results__YQ7KH"));
-        List<WebElement> searchResult = allResults.findElements(By.xpath("//div[contains(@class, 'Search_search__result-item__7')]"));
-        Assert.assertEquals(searchResult.size(), 4);
-        return searchResult;
+        return allResults.findElements(By.xpath("//div[contains(@class, 'Search_search__result-item__7')]"));
     }
 }

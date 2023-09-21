@@ -9,7 +9,8 @@ public class ExitStaryLev {
         openSite();
         doLogin();
         openMyAccount();
-        WebElement buttonLoginAfterExit = logoutFromMyAccount();
+        logoutFromMyAccount();
+        WebElement buttonLoginAfterExit = TestUtils.DRIVER.findElement(By.xpath("//button[text()='Вхід | Реєстрація']"));
         Assert.assertEquals(buttonLoginAfterExit.getText(), "Вхід | Реєстрація");
         TestUtils.DRIVER.close();
     }
@@ -37,9 +38,8 @@ public class ExitStaryLev {
         myAccountButton.click();
     }
 
-    private static WebElement logoutFromMyAccount() {
+    private static void logoutFromMyAccount() {
         WebElement exit = TestUtils.DRIVER.findElement(By.xpath("//button[text()='Вихід']"));
         exit.click();
-        return TestUtils.DRIVER.findElement(By.xpath("//button[text()='Вхід | Реєстрація']"));
     }
 }
