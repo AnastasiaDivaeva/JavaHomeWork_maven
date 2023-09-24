@@ -15,8 +15,8 @@ public class SearchBookByTittle {
         int expectedSearchResultsCount = 4;
         openSite();
         doLogin();
-        WebElement searchInput = prepareSearchQuery();
-        submitSearchQuery(searchInput);
+        prepareSearchQuery();
+        submitSearchQuery();
         List<WebElement> searchResult = getSearchResult();
         Assert.assertEquals(searchResult.size(), expectedSearchResultsCount);
         for (WebElement webElement : searchResult) {
@@ -44,13 +44,12 @@ public class SearchBookByTittle {
         enterButton.click();
     }
 
-    private static WebElement prepareSearchQuery() {
+    private static void prepareSearchQuery() {
         WebElement searchInput = TestUtils.DRIVER.findElement(By.xpath("//input[@placeholder='Шукати...']"));
         searchInput.sendKeys("Тема для медитації");
-        return searchInput;
     }
 
-    private static void submitSearchQuery( WebElement searchInput) {
+    private static void submitSearchQuery() {
         By searchButtonSelector = By.xpath("//a[ text()='Переглянути більше']");
         WebDriverWait wait = new WebDriverWait(TestUtils.DRIVER, Duration.ofSeconds(10));
         WebElement searchButton = wait.until(visibilityOfElementLocated(searchButtonSelector));
